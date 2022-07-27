@@ -1,0 +1,58 @@
+select [ProdClass] MKT DEL-SQL1
+           ,[CustID]
+           ,[ShiptoID]
+           ,[ShipVia]
+           ,[Price]
+           ,[Crtd_DateTime]
+           ,[Crtd_Prog]
+           ,[Crtd_User]
+           ,[LUpd_DateTime]
+           ,[LUpd_Prog]
+           ,[LUpd_User]
+           ,[S4Future01]
+           ,[S4Future02]
+           ,[S4Future03]
+           ,[S4Future04]
+           ,[S4Future05]
+           ,[S4Future06]
+           ,[S4Future07]
+           ,[S4Future08]
+           ,[S4Future09]
+           ,[S4Future10]
+           ,[S4Future11]
+           ,[S4Future12]
+           ,[User1]
+           ,[User2]
+           ,[User3]
+           ,[User4]
+           ,[User5]
+           ,[User6]
+           ,[User7]
+           ,[User8] ---into #temp from xslsprice
+		where user5 = 'YES'
+		and ProdClass  = '504'
+
+		--update prodclass 
+		update #temp set prodclass = '619'
+
+		 Select * from #temp
+		  where custid = '010030'   
+		  and shipvia = 'R'
+		   Select * from #temp
+		  where custid = '010030'   
+		  and shipvia = 't'
+	-----------------------------------------------	 
+		 
+		 SELECT * from xslsprice
+
+		 Select		A.Price As PriceA,A.ShipVia as ShipViaT, B. Price As PriceB, B.ShipVia As ShipViaR
+					, (A.Price -B.Price) as Diff, (675-(A.Price -B.Price)) GrandTotla, a.CustID,a.ShiptoID
+	--INTO #PriceDiff_R_T 
+
+		 from		#temp A
+		 JOIN		#temp B 
+		 ON			A.ProdClass =B.ProdClass
+		 and		a.CustID  = b.CustID
+		 and		a.ShiptoID = b.ShiptoID
+		 Where		A.ShipVia ='T' and B.ShipVia='R'
+		
